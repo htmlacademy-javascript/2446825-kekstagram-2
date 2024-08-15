@@ -12,7 +12,7 @@ checkStringLength(CHECK_STRING, CHECK_LENGTH);
 
 const PALYNDROM_CHECK = 'Лёша на полке клопа нашёл';
 
-const checkPalyndrom = function (string) {
+const checkPalyndrom = (string) => {
   const normaliseString = string.replaceAll(' ', '').toLowerCase();
   let newString = '';
 
@@ -32,7 +32,7 @@ checkPalyndrom(PALYNDROM_CHECK);
 
 const NUMBER_EXTRACT = 'Hello 020.65 and 98';
 
-const getNumber = function (string) {
+const getNumber = (string) => {
   string = string.toString();
   let newString = '';
   let resultString = '';
