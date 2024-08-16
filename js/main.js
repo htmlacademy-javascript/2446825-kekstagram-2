@@ -40,36 +40,33 @@ const COMMENT_QUANTITY = 30;
 const DESCRIPTION_QUANTITY = 25;
 const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
 
-const createRandomMessage = (element) => {
+const createRandomMessage = (length) => {
   const previousValues = [];
+  let currentValue = getRandomArrayElement(MESSAGES);
 
-  return function () {
-    let currentValue = getRandomArrayElement(element);
-    if (previousValues.length >= element.length) {
-      return null;
-    }
+  for (let i = 0; i < length; i ++) {
     while (previousValues.includes(currentValue)) {
-      currentValue = getRandomArrayElement(element);
+      currentValue = getRandomArrayElement(MESSAGES);
     }
-    previousValues.push(currentValue);
-    return currentValue;
-  };
+    previousValues[i] = currentValue;
+  }
+  return previousValues.join(' ');
 };
 
-const createComment = (commentElement, commentIndex) => ({
-  id: commentIndex + 1,
+const createComment = (_, index) => ({
+  id: index + 1,
   avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
-  message: Array.from({length: getRandomInteger(1, 2)}, createRandomMessage(MESSAGES)).join(' '),
+  message: createRandomMessage(getRandomInteger(1, 2)),
   name: getRandomArrayElement(NAMES),
 });
 
-const createPhotoDescription = (photoElement, photoIndex) => ({
-  id: photoIndex + 1,
-  url: `photos/${ photoIndex + 1 }.jpg`,
+const createPhotoDescription = (_, index) => ({
+  id: index + 1,
+  url: `photos/${ index + 1 }.jpg`,
   description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(15, 200),
-  comments: Array.from({length: getRandomInteger(0, COMMENT_QUANTITY)}, (_,index) => createComment(_, index))
+  comments: Array.from({length: getRandomInteger(0, COMMENT_QUANTITY)}, createComment)
 });
 
 // eslint-disable-next-line no-unused-vars
-const photoDescriptionArray = Array.from({length: DESCRIPTION_QUANTITY}, (_, index) => createPhotoDescription(_, index));
+const photoDescriptionArray = Array.from({length: DESCRIPTION_QUANTITY}, createPhotoDescription);
