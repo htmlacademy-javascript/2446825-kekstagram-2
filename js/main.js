@@ -18,6 +18,17 @@ const MESSAGES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
+const DESCRIPTIONS = [
+  'Просто я.',
+  'Воскресное селфи.',
+  'Даже мой кофе хочет кофе.',
+  'Утренний бодун.',
+  'А вот так я люблю спорт.',
+  'Девчонки, налетайте!',
+  'Крутая тачка и вечный драйв.',
+  'Почти как босс.'
+];
+
 const getRandomInteger = (min, max) => {
   const lower = Math.ceil(Math.min(min, max));
   const upper = Math.floor(Math.max(min, max));
@@ -25,43 +36,40 @@ const getRandomInteger = (min, max) => {
   return Math.floor(result);
 };
 
-const createRandomId = (min, max) => {
+const COMMENT_QUANTITY = 30;
+const DESCRIPTION_QUANTITY = 25;
+const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
+
+const createRandomMessage = (element) => {
   const previousValues = [];
 
   return function () {
-    let currentValue = getRandomInteger(min, max);
-    if (previousValues.length >= (max - min + 1)) {
+    let currentValue = getRandomArrayElement(element);
+    if (previousValues.length >= element.length) {
       return null;
     }
     while (previousValues.includes(currentValue)) {
-      currentValue = getRandomInteger(min, max);
+      currentValue = getRandomArrayElement(element);
     }
     previousValues.push(currentValue);
     return currentValue;
   };
 };
 
-const createPhotoId = createRandomId(1, 25);
-const createUrlId = createRandomId(1, 25);
-const createCommentId = createRandomId(1, 10000);
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
-const createComment = () => ({
-  id: createCommentId(),
+const createComment = (commentElement, commentIndex) => ({
+  id: commentIndex + 1,
   avatar: `img/avatar-${ getRandomInteger(1, 6) }.svg`,
-  message: getRandomArrayElement(MESSAGES),
+  message: Array.from({length: getRandomInteger(1, 2)}, createRandomMessage(MESSAGES)).join(' '),
   name: getRandomArrayElement(NAMES),
 });
 
-const commentArray = Array.from({length: getRandomInteger(0, 30)}, createComment);
-
-const createPhotoDescription = () => ({
-  id: createPhotoId(),
-  url: `photos/${ createUrlId() }.jpg`,
-  description: 'Моё личное фото.',
+const createPhotoDescription = (photoElement, photoIndex) => ({
+  id: photoIndex + 1,
+  url: `photos/${ photoIndex + 1 }.jpg`,
+  description: getRandomArrayElement(DESCRIPTIONS),
   likes: getRandomInteger(15, 200),
-  comments: commentArray
+  comments: Array.from({length: getRandomInteger(0, COMMENT_QUANTITY)}, (_,index) => createComment(_, index))
 });
 
 // eslint-disable-next-line no-unused-vars
-const photoDescriptionArray = Array.from({length: 25}, createPhotoDescription);
+const photoDescriptionArray = Array.from({length: DESCRIPTION_QUANTITY}, (_, index) => createPhotoDescription(_, index));
