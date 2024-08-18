@@ -42,13 +42,11 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const createRandomMessage = (length) => {
   const previousValues = [];
-  let currentValue = getRandomArrayElement(MESSAGES);
-
-  for (let i = 0; i < length; i ++) {
-    while (previousValues.includes(currentValue)) {
-      currentValue = getRandomArrayElement(MESSAGES);
+  while (previousValues.length < length) {
+    const currentValue = getRandomArrayElement(MESSAGES);
+    if (!previousValues.includes(currentValue)) {
+      previousValues.push(currentValue);
     }
-    previousValues[i] = currentValue;
   }
   return previousValues.join(' ');
 };
