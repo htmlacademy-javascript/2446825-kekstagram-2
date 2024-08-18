@@ -3,19 +3,16 @@
 const CHECK_STRING = 'Hello my friend';
 const CHECK_LENGTH = 20;
 
-const getStringLength = function (string, length) {
-  const checkResult = string.length <= length;
-  return checkResult;
-};
+const checkStringLength = (string, length) => string.length <= length;
 
-getStringLength(CHECK_STRING, CHECK_LENGTH);
+checkStringLength(CHECK_STRING, CHECK_LENGTH);
 
 
 // Функция для проверки на палиндромом
 
 const PALYNDROM_CHECK = 'Лёша на полке клопа нашёл';
 
-const getPalyndrom = function (string) {
+const checkPalyndrom = (string) => {
   const normaliseString = string.replaceAll(' ', '').toLowerCase();
   let newString = '';
 
@@ -28,14 +25,15 @@ const getPalyndrom = function (string) {
   return palyndromCheck;
 };
 
-getPalyndrom(PALYNDROM_CHECK);
+checkPalyndrom(PALYNDROM_CHECK);
 
 
 // Функция для извлечения цифр
 
-const NUMBER_EXTRACT = '1 кефир, 0.5 батона';
+const NUMBER_EXTRACT = 'Hello 020.65 and 98';
 
-const getNumber = function (string) {
+const getNumber = (string) => {
+  string = string.toString();
   let newString = '';
   let resultString = '';
   for (let i = 0; i < string.length; i++) {
