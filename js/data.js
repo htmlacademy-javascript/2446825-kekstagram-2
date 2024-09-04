@@ -60,6 +60,6 @@ const createPhotoDescription = (_, index) => ({
   comments: Array.from({length: getRandomInteger(0, COMMENT_QUANTITY)}, createComment)
 });
 
-const photoDescriptionArray = Array.from({length: DESCRIPTION_QUANTITY}, createPhotoDescription);
+const createPhotoDescriptionArray = () => Array.from({length: DESCRIPTION_QUANTITY}, createPhotoDescription);
 
-export {photoDescriptionArray};
+export {createPhotoDescriptionArray};
