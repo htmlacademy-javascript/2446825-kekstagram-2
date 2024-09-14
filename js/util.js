@@ -9,4 +9,13 @@ const getRandomArrayElement = (elements) => elements[getRandomInteger(0, element
 
 const isEscape = (evt) => evt.key === 'Escape';
 
-export {getRandomInteger, getRandomArrayElement, isEscape};
+const makeElement = (tagName, className, text) => {
+  const element = document.createElement(tagName);
+  element.classList.add(className);
+  if (text) {
+    element.textContent = text;
+  }
+  return element;
+};
+
+export {getRandomInteger, getRandomArrayElement, isEscape, makeElement};
