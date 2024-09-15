@@ -1,3 +1,6 @@
-// eslint-disable-next-line no-unused-vars
-import {createPhotoDescriptionArray} from './data.js';
-import './create-pictures.js';
+import { createPhotoDescriptionArray } from './data.js';
+import { createPictures } from './create-pictures.js';
+import { renderBigPicture } from './render-big-picture.js';
+
+createPictures(createPhotoDescriptionArray);
+renderBigPicture(createPhotoDescriptionArray);
