@@ -1,6 +1,7 @@
 import { createPhotoDescriptionArray } from './data.js';
-import { createPictures } from './create-pictures.js';
+import { renderPictures } from './render-pictures.js';
 import { renderBigPicture } from './render-big-picture.js';
+import './render-big-picture.js';
 
-createPictures(createPhotoDescriptionArray);
+renderPictures(createPhotoDescriptionArray);
 renderBigPicture(createPhotoDescriptionArray);
