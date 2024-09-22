@@ -1,5 +1,5 @@
 import { isEscape } from './util.js';
-import { renderComments, clearCommentList } from './render-comment-list.js';
+import { renderCommentList, clearCommentList } from './render-comment-list.js';
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCloseElement = bigPicture.querySelector('.big-picture__cancel');
@@ -27,7 +27,6 @@ function closeBigPicture () {
 
   document.body.classList.remove('modal-open');
   bigPicture.classList.add('hidden');
-  bigPictureCommentList.innerHTML = '';
 
   document.removeEventListener('keydown', onDocumentKeydown);
 }
@@ -55,7 +54,7 @@ const renderBigPicture = (thumbsArray) => {
     for (let i = 0; i < pictures.length; i++) {
       const thumbsArrayElement = thumbsArray[i];
       if (pictures[i] === targetElement) {
-        renderComments(thumbsArrayElement.comments);
+        renderCommentList(thumbsArrayElement.comments);
         createBigPictureInfo(targetElement);
       }
     }

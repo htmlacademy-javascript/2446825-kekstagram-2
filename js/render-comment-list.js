@@ -8,18 +8,18 @@ const bigPicture = document.querySelector('.big-picture');
 const bigPictureCommentList = bigPicture.querySelector('.social__comments');
 const bigPictureCommentLoader = bigPicture.querySelector('.comments-loader');
 
-const renderComents = () => {
+const renderComments = () => {
   const commentFragment = document.createDocumentFragment();
   const renderedComments = commentList.slice(currentCount, currentCount + STEP);
   const renderedCommentsLength = renderedComments.length + currentCount;
 
-  renderedComments.forEach((elem) => {
+  renderedComments.forEach((element) => {
     const newComment = makeElement('li', 'social__comment');
     const newCommentImage = makeElement('img', 'social__picture');
-    newCommentImage.src = elem.avatar;
-    newCommentImage.alt = elem.name;
+    newCommentImage.src = element.avatar;
+    newCommentImage.alt = element.name;
     newComment.appendChild(newCommentImage);
-    const newCommentText = makeElement('p', 'social__text', elem.message);
+    const newCommentText = makeElement('p', 'social__text', element.message);
     newComment.appendChild(newCommentText);
     commentFragment.appendChild(newComment);
   });
@@ -38,14 +38,14 @@ const clearCommentList = () => {
   bigPictureCommentList.innerHTML = '';
   bigPictureCommentLoader.classList.remove('hidden');
 
-  bigPictureCommentLoader.removeEventListener('click', renderComents);
+  bigPictureCommentLoader.removeEventListener('click', renderComments);
 };
 
-const renderComments = (arraylist) => {
-  commentList = arraylist;
-  renderComents();
+const renderCommentList = (commentsArray) => {
+  commentList = commentsArray;
+  renderComments();
 
-  bigPictureCommentLoader.addEventListener('click', renderComents);
+  bigPictureCommentLoader.addEventListener('click', renderComments);
 };
 
-export { renderComments, clearCommentList };
+export { renderCommentList, clearCommentList };
