@@ -3,8 +3,8 @@ const picturesList = document.querySelector('.pictures');
 
 const similarListFragment = document.createDocumentFragment();
 
-const createPictures = (array) => {
-  array.forEach(({url, description, likes, comments}) => {
+const renderPictures = (thumbsArray) => {
+  thumbsArray.forEach(({url, description, likes, comments}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
     pictureElement.querySelector('.picture__img').src = url;
     pictureElement.querySelector('.picture__img').alt = description;
@@ -15,4 +15,4 @@ const createPictures = (array) => {
   picturesList.appendChild(similarListFragment);
 };
 
-export {createPictures};
+export { renderPictures };
