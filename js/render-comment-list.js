@@ -1,4 +1,4 @@
-import { makeElement } from './util';
+import { makeElement } from './util.js';
 
 const STEP = 5;
 let currentCount = 0;
