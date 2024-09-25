@@ -1,7 +1,5 @@
 import { isEscape } from './util.js';
 import { renderCommentList, clearCommentList } from './render-comment-list.js';
-import { createPhotoDescriptionArray } from './data.js';
-console.log(createPhotoDescriptionArray);
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCloseElement = bigPicture.querySelector('.big-picture__cancel');
@@ -45,12 +43,12 @@ const renderBigPicture = (thumbsArray) => {
 
   pictureContainer.addEventListener('click', (evt) => {
     const targetElement = evt.target.closest('.picture');
-    const id = targetElement.dataset.id;
 
     if (!targetElement) {
       return;
     }
 
+    const id = targetElement.dataset.id;
     openBigPicture(evt);
     renderCommentList(thumbsArray[id].comments);
     createBigPictureInfo(thumbsArray[id]);
