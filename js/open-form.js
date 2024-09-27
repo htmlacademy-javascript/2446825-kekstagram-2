@@ -19,7 +19,7 @@ const pristine = new Pristine(form, {
 function validateHashtagValue (value) {
   const hashtagsArray = value.split(' ');
 
-  return hashtagsArray.every((elem) => hashtagRule.test(elem)) || hashtagsArray[0] === '';
+  return hashtagsArray.every((element) => hashtagRule.test(element)) || hashtagsArray[0] === '';
 }
 
 function validateHashtagQuantity (value) {
@@ -33,9 +33,9 @@ function validateHashtagRepeat (value) {
   const hashtagsArray = value.split(' ');
 
   hashtagsArray.forEach((element) => {
-    const newele = element.toLowerCase();
-    if (!noRepeatArray.includes(newele)) {
-      noRepeatArray.push(newele);
+    element = element.toLowerCase();
+    if (!noRepeatArray.includes(element)) {
+      noRepeatArray.push(element);
     }
   });
   return noRepeatArray.length === hashtagsArray.length;
