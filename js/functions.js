@@ -64,3 +64,5 @@ const getMinuteSum = (string) => {
 const checkTime = (startDay, endDay, startСonference, duration) => getMinuteSum(startDay) <= getMinuteSum(startСonference) && getMinuteSum(endDay) >= getMinuteSum(startСonference) + duration;
 
 checkTime(START_DAY_TIME, END_DAY_TIME, START_CONFERENCE_TIME, CONFERENCE_DURATION);
+
+export { getNumber };
