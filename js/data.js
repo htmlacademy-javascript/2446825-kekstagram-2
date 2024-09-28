@@ -62,4 +62,60 @@ const createPhotoDescription = (_, index) => ({
 
 const createPhotoDescriptionArray = Array.from({length: DESCRIPTION_QUANTITY}, createPhotoDescription);
 
-export {createPhotoDescriptionArray};
+const sliderSetting = {
+  none:{
+    effect: 'none',
+    value: '',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    start: 1
+  },
+
+  chrome:{
+    effect: 'grayscale',
+    value: '',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    start: 1
+  },
+
+  sepia: {
+    effect: 'sepia',
+    value: '',
+    min: 0,
+    max: 1,
+    step: 0.1,
+    start: 1
+  },
+
+  marvin: {
+    effect: 'invert',
+    value: '%',
+    min: 0,
+    max: 100,
+    step: 1,
+    start: 100
+  },
+
+  phobos: {
+    effect: 'blur',
+    value: 'px',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    start: 3
+  },
+
+  heat: {
+    effect: 'brightness',
+    value: '',
+    min: 0,
+    max: 3,
+    step: 0.1,
+    start: 3
+  }
+};
+
+export {createPhotoDescriptionArray, sliderSetting};
