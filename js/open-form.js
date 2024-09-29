@@ -1,5 +1,8 @@
 import { isEscape } from './util.js';
 
+const MAX_COMMENT_LENGTH = 140;
+const MAX_HASHTAG_QUANTITY = 5;
+
 const form = document.querySelector('.img-upload__form');
 const openFormElement = form.querySelector('.img-upload__input');
 const overlay = form.querySelector('.img-upload__overlay');
@@ -16,51 +19,43 @@ const pristine = new Pristine(form, {
   errorTextTag: 'div'
 });
 
-function validateHashtagValue (value) {
+const validateComments = (value) => value.length <= MAX_COMMENT_LENGTH;
+let hashtagValue;
+let hashtagQuantity;
+let hashtagRepeat;
+const validateHashtag = (value) => {
   const hashtagsArray = value.split(' ');
-
-  return hashtagsArray.every((element) => hashtagRule.test(element)) || hashtagsArray[0] === '';
-}
-
-function validateHashtagQuantity (value) {
-  const hashtagsArray = value.split(' ');
-
-  return hashtagsArray.length <= 5;
-}
-
-function validateHashtagRepeat (value) {
   const noRepeatArray = [];
-  const hashtagsArray = value.split(' ');
-
   hashtagsArray.forEach((element) => {
     element = element.toLowerCase();
     if (!noRepeatArray.includes(element)) {
       noRepeatArray.push(element);
     }
   });
-  return noRepeatArray.length === hashtagsArray.length;
-}
+  hashtagValue = hashtagsArray.every((element) => hashtagRule.test(element)) || hashtagsArray[0] === '';
+  hashtagQuantity = hashtagsArray.length <= MAX_HASHTAG_QUANTITY;
+  hashtagRepeat = noRepeatArray.length === hashtagsArray.length;
 
-function validateComments (value) {
-  return value.length <= 140;
-}
+  return hashtagValue && hashtagQuantity && hashtagRepeat;
+};
+
+const hastagErrorText = () => {
+  const validateHashtagResult = [hashtagValue, hashtagQuantity, hashtagRepeat];
+  const errorMessages = ['Неверный формат хэштега.', 'Максимум 5 хэштегов.', 'Хэштеги не повторяются.'];
+  const errorText = [];
+  for (let i = 0; i < validateHashtagResult.length; i++) {
+    if (!validateHashtagResult[i]) {
+      errorText.push(errorMessages[i]);
+    }
+  }
+
+  return errorText.join(' | ');
+};
 
 pristine.addValidator(
   hashtagInput,
-  validateHashtagRepeat,
-  'Хэштеги не должны повторяться',
-);
-
-pristine.addValidator(
-  hashtagInput,
-  validateHashtagQuantity,
-  'Максимум 5 хэштегов',
-);
-
-pristine.addValidator(
-  hashtagInput,
-  validateHashtagValue,
-  'Неверный формат хэштега'
+  validateHashtag,
+  hastagErrorText,
 );
 
 pristine.addValidator(
@@ -82,23 +77,11 @@ const onDocumentKeydown = (evt) => {
   }
 };
 
-function openForm () {
+function openForm() {
   document.body.classList.add('modal-open');
   overlay.classList.remove('hidden');
 
   document.addEventListener('keydown', onDocumentKeydown);
-}
-
-function closeForm () {
-  document.body.classList.remove('modal-open');
-  overlay.classList.add('hidden');
-  openFormElement.value = '';
-
-  document.removeEventListener('keydown', onDocumentKeydown);
-}
-
-openFormElement.addEventListener('change', () => {
-  openForm();
 
   hashtagInput.addEventListener('focus', () => {
     document.removeEventListener('keydown', onDocumentKeydown);
@@ -115,6 +98,18 @@ openFormElement.addEventListener('change', () => {
   commentInput.addEventListener('blur', () => {
     document.addEventListener('keydown', onDocumentKeydown);
   });
+}
+
+function closeForm () {
+  document.body.classList.remove('modal-open');
+  overlay.classList.add('hidden');
+  openFormElement.value = '';
+
+  document.removeEventListener('keydown', onDocumentKeydown);
+}
+
+openFormElement.addEventListener('change', () => {
+  openForm();
 });
 
 closeButton.addEventListener('click', () => {
