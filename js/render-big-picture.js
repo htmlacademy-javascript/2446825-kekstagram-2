@@ -32,10 +32,10 @@ function closeBigPicture () {
 }
 
 const createBigPictureInfo = (element) => {
-  bigPicture.querySelector('img').src = element.querySelector('.picture__img').src;
-  bigPicture.querySelector('.likes-count').textContent = element.querySelector('.picture__likes').textContent;
-  bigPicture.querySelector('.social__comment-total-count').textContent = element.querySelector('.picture__comments').textContent;
-  bigPictureCaption.textContent = element.querySelector('.picture__img').alt;
+  bigPicture.querySelector('img').src = element.url;
+  bigPicture.querySelector('.likes-count').textContent = element.likes;
+  bigPicture.querySelector('.social__comment-total-count').textContent = element.comments.length;
+  bigPictureCaption.textContent = element.description;
 };
 
 const renderBigPicture = (thumbsArray) => {
@@ -43,21 +43,15 @@ const renderBigPicture = (thumbsArray) => {
 
   pictureContainer.addEventListener('click', (evt) => {
     const targetElement = evt.target.closest('.picture');
-    const pictures = document.querySelectorAll('.picture');
 
     if (!targetElement) {
       return;
     }
 
+    const id = targetElement.dataset.id;
     openBigPicture(evt);
-
-    for (let i = 0; i < pictures.length; i++) {
-      const thumbsArrayElement = thumbsArray[i];
-      if (pictures[i] === targetElement) {
-        renderCommentList(thumbsArrayElement.comments);
-        createBigPictureInfo(targetElement);
-      }
-    }
+    renderCommentList(thumbsArray[id].comments);
+    createBigPictureInfo(thumbsArray[id]);
   });
 };
 
