@@ -64,8 +64,8 @@ const createPhotoDescriptionArray = Array.from({length: DESCRIPTION_QUANTITY}, c
 
 const sliderSetting = {
   none:{
-    effect: 'none',
-    value: '',
+    effect: 'unset',
+    unit: '',
     min: 0,
     max: 1,
     step: 0.1,
@@ -74,7 +74,7 @@ const sliderSetting = {
 
   chrome:{
     effect: 'grayscale',
-    value: '',
+    unit: '',
     min: 0,
     max: 1,
     step: 0.1,
@@ -83,7 +83,7 @@ const sliderSetting = {
 
   sepia: {
     effect: 'sepia',
-    value: '',
+    unit: '',
     min: 0,
     max: 1,
     step: 0.1,
@@ -92,7 +92,7 @@ const sliderSetting = {
 
   marvin: {
     effect: 'invert',
-    value: '%',
+    unit: '%',
     min: 0,
     max: 100,
     step: 1,
@@ -101,7 +101,7 @@ const sliderSetting = {
 
   phobos: {
     effect: 'blur',
-    value: 'px',
+    unit: 'px',
     min: 0,
     max: 3,
     step: 0.1,
@@ -110,7 +110,7 @@ const sliderSetting = {
 
   heat: {
     effect: 'brightness',
-    value: '',
+    unit: '',
     min: 0,
     max: 3,
     step: 0.1,

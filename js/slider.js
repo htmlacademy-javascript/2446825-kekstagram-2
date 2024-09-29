@@ -8,12 +8,11 @@ const overlay = form.querySelector('.img-upload__overlay');
 const scaleUpButton = overlay.querySelector('.scale__control--bigger');
 const scaleDownButton = overlay.querySelector('.scale__control--smaller');
 const scaleValue = overlay.querySelector('.scale__control--value');
-const img = overlay.querySelector('.img-upload__preview').querySelector('img');
+const previewImage = overlay.querySelector('.img-upload__preview').querySelector('img');
 const sliderElement = overlay.querySelector('.effect-level__slider');
+const sliderContainer = overlay.querySelector('.img-upload__effect-level');
 const effectValue = overlay.querySelector('.effect-level__value');
-const chrome = overlay.querySelector('#effect-chrome');
-const radio = overlay.querySelectorAll('.effects__radio');
-console.log(chrome.value);
+const radioButtons = overlay.querySelectorAll('.effects__radio');
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -25,49 +24,48 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
-radio.forEach((element) => {
+radioButtons.forEach((element) => {
+  sliderContainer.classList.add('hidden');
   element.addEventListener('change', (evt) => {
-    const target = evt.target;
-    const tar = target.value;
-    if (target.checked) {
+    const effect = evt.target.value;
+
+    if (evt.target.checked) {
       sliderElement.noUiSlider.updateOptions({
         range: {
-          min: sliderSetting[tar].min,
-          max: sliderSetting[tar].max,
+          min: sliderSetting[effect].min,
+          max: sliderSetting[effect].max,
         },
-        start: sliderSetting[tar].start,
-        step: sliderSetting[tar].step,
+        start: sliderSetting[effect].start,
+        step: sliderSetting[effect].step,
       });
       sliderElement.noUiSlider.on('update', () => {
         effectValue.value = sliderElement.noUiSlider.get();
-        if (sliderSetting[tar].effect === 'none') {
-          img.style.filter = `${sliderSetting[tar].effect}`;
-        } else if (sliderSetting[tar].value === '%') {
-          img.style.filter = `${sliderSetting[tar].effect}(${effectValue.value}%)`;
-        } else if (sliderSetting[tar].value === 'px') {
-          img.style.filter = `${sliderSetting[tar].effect}(${effectValue.value}px)`;
-        } else {
-          img.style.filter = `${sliderSetting[tar].effect}(${effectValue.value})`;
-        }
+        previewImage.style.filter = `${sliderSetting[effect].effect}(${effectValue.value}${sliderSetting[effect].unit})`;
       });
+    }
+    if (effect !== 'none') {
+      sliderContainer.classList.remove('hidden');
+    } else {
+      previewImage.style.filter = `${sliderSetting[effect].effect}`;
+      sliderContainer.classList.add('hidden');
     }
   });
 });
 
-let value = getNumber(scaleValue.value);
+let valueNumber = getNumber(scaleValue.value);
 
 scaleDownButton.addEventListener('click', () => {
-  if (value > 25) {
-    value -= STEP;
+  if (valueNumber > 25) {
+    valueNumber -= STEP;
   }
-  scaleValue.value = `${value}%`;
-  img.style.transform = `scale(${ value / 100})`;
+  scaleValue.value = `${valueNumber}%`;
+  previewImage.style.transform = `scale(${ valueNumber / 100})`;
 });
 
 scaleUpButton.addEventListener('click', () => {
-  if (value < 100) {
-    value += STEP;
+  if (valueNumber < 100) {
+    valueNumber += STEP;
   }
-  scaleValue.value = `${value}%`;
-  img.style.transform = `scale(${ value / 100})`;
+  scaleValue.value = `${ valueNumber }%`;
+  previewImage.style.transform = `scale(${ valueNumber / 100})`;
 });
