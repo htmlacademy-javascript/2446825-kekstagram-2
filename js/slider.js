@@ -9,10 +9,11 @@ const scaleUpButton = overlay.querySelector('.scale__control--bigger');
 const scaleDownButton = overlay.querySelector('.scale__control--smaller');
 const scaleValue = overlay.querySelector('.scale__control--value');
 const previewImage = overlay.querySelector('.img-upload__preview').querySelector('img');
-const sliderElement = overlay.querySelector('.effect-level__slider');
 const sliderContainer = overlay.querySelector('.img-upload__effect-level');
+const sliderElement = overlay.querySelector('.effect-level__slider');
 const effectValue = overlay.querySelector('.effect-level__value');
-const radioButtons = overlay.querySelectorAll('.effects__radio');
+const filterList = overlay.querySelectorAll('.effects__radio');
+let valueNumber = getNumber(scaleValue.value);
 
 noUiSlider.create(sliderElement, {
   range: {
@@ -24,7 +25,7 @@ noUiSlider.create(sliderElement, {
   connect: 'lower',
 });
 
-radioButtons.forEach((element) => {
+filterList.forEach((element) => {
   sliderContainer.classList.add('hidden');
   element.addEventListener('change', (evt) => {
     const effect = evt.target.value;
@@ -51,8 +52,6 @@ radioButtons.forEach((element) => {
     }
   });
 });
-
-let valueNumber = getNumber(scaleValue.value);
 
 scaleDownButton.addEventListener('click', () => {
   if (valueNumber > 25) {

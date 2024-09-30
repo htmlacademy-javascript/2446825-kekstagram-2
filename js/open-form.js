@@ -12,6 +12,10 @@ const commentInput = overlay.querySelector('.text__description');
 
 const hashtagRule = /^#[а-яёa-z0-9]{1,19}$/i;
 
+let hashtagValue;
+let hashtagQuantity;
+let hashtagRepeat;
+
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
@@ -20,9 +24,7 @@ const pristine = new Pristine(form, {
 });
 
 const validateComments = (value) => value.length <= MAX_COMMENT_LENGTH;
-let hashtagValue;
-let hashtagQuantity;
-let hashtagRepeat;
+
 const validateHashtag = (value) => {
   const hashtagsArray = value.split(' ');
   const noRepeatArray = [];
@@ -41,7 +43,7 @@ const validateHashtag = (value) => {
 
 const hastagErrorText = () => {
   const validateHashtagResult = [hashtagValue, hashtagQuantity, hashtagRepeat];
-  const errorMessages = ['Неверный формат хэштега.', 'Максимум 5 хэштегов.', 'Хэштеги не повторяются.'];
+  const errorMessages = ['Неверный формат хэштега.', 'Максимум 5 хэштегов.', 'Хэштеги не должны повторяться.'];
   const errorText = [];
   for (let i = 0; i < validateHashtagResult.length; i++) {
     if (!validateHashtagResult[i]) {

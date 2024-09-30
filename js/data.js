@@ -1,4 +1,6 @@
-import {getRandomInteger, getRandomArrayElement} from './util.js';
+import { getRandomInteger, getRandomArrayElement } from './util.js';
+
+//* Генерация массива фотографий пользователей
 
 const NAMES = [
   'Александр',
@@ -62,17 +64,19 @@ const createPhotoDescription = (_, index) => ({
 
 const createPhotoDescriptionArray = Array.from({length: DESCRIPTION_QUANTITY}, createPhotoDescription);
 
+//*Настройки слайдера фильтров
+
 const sliderSetting = {
-  none:{
+  none: {
     effect: 'unset',
     unit: '',
     min: 0,
-    max: 1,
-    step: 0.1,
-    start: 1
+    max: 0,
+    step: 0,
+    start: 0
   },
 
-  chrome:{
+  chrome: {
     effect: 'grayscale',
     unit: '',
     min: 0,
@@ -118,4 +122,4 @@ const sliderSetting = {
   }
 };
 
-export {createPhotoDescriptionArray, sliderSetting};
+export { createPhotoDescriptionArray, sliderSetting };
