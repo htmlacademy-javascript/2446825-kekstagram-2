@@ -26,7 +26,7 @@ const pristine = new Pristine(form, {
 const validateComments = (value) => value.length <= MAX_COMMENT_LENGTH;
 
 const validateHashtag = (value) => {
-  const hashtagsArray = value.split(' ');
+  const hashtagsArray = value.trim().split(' ').filter((element) => element !== '');
   const noRepeatArray = [];
   hashtagsArray.forEach((element) => {
     element = element.toLowerCase();
@@ -34,7 +34,8 @@ const validateHashtag = (value) => {
       noRepeatArray.push(element);
     }
   });
-  hashtagValue = hashtagsArray.every((element) => hashtagRule.test(element)) || hashtagsArray[0] === '';
+
+  hashtagValue = hashtagsArray.every((element) => hashtagRule.test(element));
   hashtagQuantity = hashtagsArray.length <= MAX_HASHTAG_QUANTITY;
   hashtagRepeat = noRepeatArray.length === hashtagsArray.length;
 
@@ -42,16 +43,20 @@ const validateHashtag = (value) => {
 };
 
 const hastagErrorText = () => {
-  const validateHashtagResult = [hashtagValue, hashtagQuantity, hashtagRepeat];
-  const errorMessages = ['Неверный формат хэштега.', 'Максимум 5 хэштегов.', 'Хэштеги не должны повторяться.'];
-  const errorText = [];
-  for (let i = 0; i < validateHashtagResult.length; i++) {
-    if (!validateHashtagResult[i]) {
-      errorText.push(errorMessages[i]);
-    }
+  let errorText = '';
+  if (!hashtagValue) {
+    errorText += ' Неверный формат хэштега! ';
   }
 
-  return errorText.join(' | ');
+  if (!hashtagQuantity) {
+    errorText += ' Максимум 5 хэштегов! ';
+  }
+
+  if (!hashtagRepeat) {
+    errorText += ' Хэштеги не должны повторяться! ';
+  }
+
+  return errorText;
 };
 
 pristine.addValidator(
@@ -75,7 +80,11 @@ form.addEventListener('submit', (evt) => {
 const onDocumentKeydown = (evt) => {
   if (isEscape(evt)) {
     evt.preventDefault();
-    closeForm();
+    if (document.activeElement === hashtagInput || document.activeElement === commentInput) {
+      evt.stopPropagation();
+    } else {
+      closeForm();
+    }
   }
 };
 
@@ -84,22 +93,6 @@ function openForm() {
   overlay.classList.remove('hidden');
 
   document.addEventListener('keydown', onDocumentKeydown);
-
-  hashtagInput.addEventListener('focus', () => {
-    document.removeEventListener('keydown', onDocumentKeydown);
-  });
-
-  hashtagInput.addEventListener('blur', () => {
-    document.addEventListener('keydown', onDocumentKeydown);
-  });
-
-  commentInput.addEventListener('focus', () => {
-    document.removeEventListener('keydown', onDocumentKeydown);
-  });
-
-  commentInput.addEventListener('blur', () => {
-    document.addEventListener('keydown', onDocumentKeydown);
-  });
 }
 
 function closeForm () {

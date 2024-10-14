@@ -18,4 +18,17 @@ const makeElement = (tagName, className, text) => {
   return element;
 };
 
-export {getRandomInteger, getRandomArrayElement, isEscape, makeElement};
+const getNumber = (string) => {
+  string = string.toString();
+  let newString = '';
+  let resultString = '';
+  for (let i = 0; i < string.length; i++) {
+    if (isNaN(parseInt(string[i], 10)) === false) {
+      newString += string[i];
+    }
+    resultString = parseInt(newString, 10);
+  }
+  return resultString;
+};
+
+export {getRandomInteger, getRandomArrayElement, isEscape, makeElement, getNumber};
