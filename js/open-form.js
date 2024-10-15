@@ -1,11 +1,12 @@
 import { isEscape } from './util.js';
+import { showUnloadAllert, showUnloadSucces } from './alerts.js';
 
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_QUANTITY = 5;
 
-const form = document.querySelector('.img-upload__form');
-const openFormElement = form.querySelector('.img-upload__input');
-const overlay = form.querySelector('.img-upload__overlay');
+const filterForm = document.querySelector('.img-upload__form');
+const openFormElement = filterForm.querySelector('.img-upload__input');
+const overlay = filterForm.querySelector('.img-upload__overlay');
 const closeButton = overlay.querySelector('.img-upload__cancel');
 const hashtagInput = overlay.querySelector('.text__hashtags');
 const commentInput = overlay.querySelector('.text__description');
@@ -16,7 +17,7 @@ let hashtagValue;
 let hashtagQuantity;
 let hashtagRepeat;
 
-const pristine = new Pristine(form, {
+const pristine = new Pristine(filterForm, {
   classTo: 'img-upload__field-wrapper',
   errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
@@ -71,31 +72,25 @@ pristine.addValidator(
   'Максимум 140 символов'
 );
 
-form.addEventListener('submit', (evt) => {
-  if (!pristine.validate()) {
-    evt.preventDefault();
-  }
-});
-
 const onDocumentKeydown = (evt) => {
   if (isEscape(evt)) {
     evt.preventDefault();
-    if (document.activeElement === hashtagInput || document.activeElement === commentInput) {
+    if (document.activeElement === hashtagInput || document.activeElement === commentInput || document.body.lastChild.tagName === 'SECTION') {
       evt.stopPropagation();
     } else {
-      closeForm();
+      closeFilterForm();
     }
   }
 };
 
-function openForm() {
+function openFilterForm() {
   document.body.classList.add('modal-open');
   overlay.classList.remove('hidden');
 
   document.addEventListener('keydown', onDocumentKeydown);
 }
 
-function closeForm () {
+function closeFilterForm () {
   document.body.classList.remove('modal-open');
   overlay.classList.add('hidden');
   openFormElement.value = '';
@@ -104,9 +99,40 @@ function closeForm () {
 }
 
 openFormElement.addEventListener('change', () => {
-  openForm();
+  openFilterForm();
 });
 
 closeButton.addEventListener('click', () => {
-  closeForm();
+  closeFilterForm();
 });
+
+const setFilterFormSubmit = () => {
+  filterForm.addEventListener('submit', (evt) => {
+    evt.preventDefault();
+    if (pristine.validate()) {
+      const formData = new FormData(evt.target);
+
+      fetch('https://31.javascript.htmlacademy.pro/kekstagram',
+        {
+          method: 'POST',
+          body: formData,
+        },
+      )
+        .then((response) => {
+          if(response.ok) {
+            closeFilterForm();
+          } else {
+            showUnloadAllert();
+          }
+        })
+        .then(() => {
+          showUnloadSucces();
+        })
+        .catch(() => {
+          showUnloadAllert();
+        });
+    }
+  });
+};
+
+export { setFilterFormSubmit };
