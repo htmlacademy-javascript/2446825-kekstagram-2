@@ -14,6 +14,7 @@ scaleDownButton.addEventListener('click', () => {
   if (valueNumber > 25) {
     valueNumber -= STEP;
   }
+
   scaleValue.value = `${valueNumber}%`;
   previewImage.style.transform = `scale(${ valueNumber / 100})`;
 });
@@ -25,3 +26,10 @@ scaleUpButton.addEventListener('click', () => {
   scaleValue.value = `${ valueNumber }%`;
   previewImage.style.transform = `scale(${ valueNumber / 100})`;
 });
+
+const sizeReset = () => {
+  scaleValue.value = '100%';
+  previewImage.style.transform = 'scale(1)';
+};
+
+export { sizeReset };

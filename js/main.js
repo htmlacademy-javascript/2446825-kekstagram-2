@@ -1,10 +1,16 @@
-import { createLoader } from './load.js';
+import { getData } from './api.js';
+import { showLoadAlert } from './alerts.js';
 import { renderPictures } from './render-pictures.js';
 import { renderBigPicture } from './render-big-picture.js';
 import { setFilterFormSubmit } from './open-form.js';
-import './open-form.js';
-import './slider.js';
-import './resize-photo.js';
 
-createLoader(renderPictures, renderBigPicture);
+getData()
+  .then((photos) => {
+    renderPictures(photos);
+    renderBigPicture(photos);
+  })
+  .catch(() => {
+    showLoadAlert();
+  });
+
 setFilterFormSubmit();

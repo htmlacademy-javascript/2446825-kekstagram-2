@@ -19,7 +19,7 @@ const showLoadAlert = () => {
 };
 
 //* сообщение с ошибкой загрузки изображения
-const showUnloadAllert = () => {
+const showUnloadAllertMessage = () => {
   const alertContainer = unloadAllert.cloneNode(true);
   const errorButton = alertContainer.querySelector('.error__button');
   const innerContainer = alertContainer.querySelector('.error__inner');
@@ -45,7 +45,7 @@ const showUnloadAllert = () => {
 };
 
 //* сообщение об успешной загрузке изображения
-const showUnloadSucces = () => {
+const showUnloadSuccesMessage = () => {
   const successContainer = unloadSucces.cloneNode(true);
   const successButton = successContainer.querySelector('.success__button');
   const innerContainer = successContainer.querySelector('.success__inner');
@@ -62,12 +62,11 @@ const showUnloadSucces = () => {
     }
   });
 
-  document.addEventListener('keydown', (evt) => {
+  document.addEventListener('keydown', () => {
     if (isEscape) {
-      evt.stopPropagation();
       successContainer.remove();
     }
   });
 };
 
-export { showLoadAlert, showUnloadAllert, showUnloadSucces };
+export { showLoadAlert, showUnloadAllertMessage, showUnloadSuccesMessage };
