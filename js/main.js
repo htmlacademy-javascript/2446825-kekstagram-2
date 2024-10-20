@@ -1,8 +1,16 @@
-import { createPhotoDescriptionArray } from './data.js';
+import { getData } from './api.js';
+import { showLoadAlert } from './alerts.js';
 import { renderPictures } from './render-pictures.js';
 import { renderBigPicture } from './render-big-picture.js';
-import './open-form.js';
-import './slider.js';
+import { setFilterFormSubmit } from './open-form.js';
 
-renderPictures(createPhotoDescriptionArray);
-renderBigPicture(createPhotoDescriptionArray);
+getData()
+  .then((photos) => {
+    renderPictures(photos);
+    renderBigPicture(photos);
+  })
+  .catch(() => {
+    showLoadAlert();
+  });
+
+setFilterFormSubmit();

@@ -6,7 +6,7 @@ const similarListFragment = document.createDocumentFragment();
 const renderPictures = (thumbsArray) => {
   thumbsArray.forEach(({id, url, description, likes, comments}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
-    pictureElement.dataset.id = id - 1;
+    pictureElement.dataset.id = id;
     pictureElement.querySelector('.picture__img').src = url;
     pictureElement.querySelector('.picture__img').alt = description;
     pictureElement.querySelector('.picture__likes').textContent = likes;
