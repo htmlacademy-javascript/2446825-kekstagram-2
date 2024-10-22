@@ -1,12 +1,11 @@
 import { shuffle } from './util';
-import { clearPictureList, renderPictures } from './render-pictures';
 
 const RANDOM_PHOTO_QUANTITY = 10;
 
 const filterContainer = document.querySelector('.img-filters');
 const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
 
-const randomTenPhotos = (photoArray) => shuffle(photoArray.slice()).slice(0, RANDOM_PHOTO_QUANTITY);
+const randomSort = (photoArray) => shuffle(photoArray.slice()).slice(0, RANDOM_PHOTO_QUANTITY);
 
 const getCommentsQuantity = (photo) => {
   const commentsQuantity = photo.comments.length;
@@ -25,11 +24,10 @@ const showFilterList = () => {
   filterContainer.classList.remove('img-filters--inactive');
 };
 
-const filterSwitch = (photoArray) => {
+const filterSwitch = (def, random, discuss) => {
   filterContainer.addEventListener('click', (evt) => {
     const target = evt.target;
     if (target.classList.contains('img-filters__button')) {
-      clearPictureList();
       filterButtons.forEach((element) => {
         element.classList.remove('img-filters__button--active');
       });
@@ -37,17 +35,17 @@ const filterSwitch = (photoArray) => {
     }
 
     if (target.id === 'filter-default') {
-      renderPictures(photoArray);
+      def();
     }
 
     if (target.id === 'filter-random') {
-      renderPictures(randomTenPhotos(photoArray));
+      random();
     }
 
     if (target.id === 'filter-discussed') {
-      renderPictures(sortByComments(photoArray));
+      discuss();
     }
   });
 };
 
-export { showFilterList, filterSwitch };
+export { showFilterList, filterSwitch, randomSort, sortByComments };
