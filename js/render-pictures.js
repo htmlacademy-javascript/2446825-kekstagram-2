@@ -16,4 +16,11 @@ const renderPictures = (thumbsArray) => {
   picturesList.appendChild(similarListFragment);
 };
 
-export { renderPictures };
+const clearPictureList = () => {
+  const pic = document.querySelectorAll('.picture');
+  pic.forEach((element) => {
+    element.remove();
+  });
+};
+
+export { renderPictures, clearPictureList };

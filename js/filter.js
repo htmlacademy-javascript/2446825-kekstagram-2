@@ -1,21 +1,12 @@
+import { shuffle } from './util';
+import { clearPictureList, renderPictures } from './render-pictures';
+
+const RANDOM_PHOTO_QUANTITY = 10;
+
 const filterContainer = document.querySelector('.img-filters');
-const filterButtons = document.querySelectorAll('.img-filters__button');
+const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
 
-const toggleActiveButton = (evt) => {
-  filterButtons.forEach((element) => {
-    element.classList.remove('img-filters__button--active');
-    evt.target.classList.add('img-filters__button--active');
-  });
-};
-
-
-filterButtons.forEach((element) => {
-  element.addEventListener('click', toggleActiveButton);
-});
-
-const showFilterList = () => {
-  filterContainer.classList.remove('img-filters--inactive');
-};
+const randomTenPhotos = (photoArray) => shuffle(photoArray.slice()).slice(0, RANDOM_PHOTO_QUANTITY);
 
 const getCommentsQuantity = (photo) => {
   const commentsQuantity = photo.comments.length;
@@ -30,5 +21,33 @@ const comparePhotosByComments = (photoA, photoB) => {
 
 const sortByComments = (photoArray) => photoArray.slice().sort(comparePhotosByComments);
 
+const showFilterList = () => {
+  filterContainer.classList.remove('img-filters--inactive');
+};
 
-export { showFilterList, sortByComments };
+const filterSwitch = (photoArray) => {
+  filterContainer.addEventListener('click', (evt) => {
+    const target = evt.target;
+    if (target.classList.contains('img-filters__button')) {
+      clearPictureList();
+      filterButtons.forEach((element) => {
+        element.classList.remove('img-filters__button--active');
+      });
+      target.classList.add('img-filters__button--active');
+    }
+
+    if (target.id === 'filter-default') {
+      renderPictures(photoArray);
+    }
+
+    if (target.id === 'filter-random') {
+      renderPictures(randomTenPhotos(photoArray));
+    }
+
+    if (target.id === 'filter-discussed') {
+      renderPictures(sortByComments(photoArray));
+    }
+  });
+};
+
+export { showFilterList, filterSwitch };
