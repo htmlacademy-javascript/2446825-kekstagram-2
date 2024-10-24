@@ -4,6 +4,13 @@ const RANDOM_PHOTO_QUANTITY = 10;
 
 const filterContainer = document.querySelector('.img-filters');
 const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
+const defaultFilterButton = filterContainer.querySelector('#filter-default');
+const randomFilterButton = filterContainer.querySelector('#filter-random');
+const commentFilterButton = filterContainer.querySelector('#filter-discussed');
+
+const showFilterList = () => {
+  filterContainer.classList.remove('img-filters--inactive');
+};
 
 const randomSort = (photoArray) => shuffle(photoArray.slice()).slice(0, RANDOM_PHOTO_QUANTITY);
 
@@ -20,11 +27,7 @@ const comparePhotosByComments = (photoA, photoB) => {
 
 const sortByComments = (photoArray) => photoArray.slice().sort(comparePhotosByComments);
 
-const showFilterList = () => {
-  filterContainer.classList.remove('img-filters--inactive');
-};
-
-const filterSwitch = (def, random, discuss) => {
+const filterSwitch = () => {
   filterContainer.addEventListener('click', (evt) => {
     const target = evt.target;
     if (target.classList.contains('img-filters__button')) {
@@ -33,19 +36,25 @@ const filterSwitch = (def, random, discuss) => {
       });
       target.classList.add('img-filters__button--active');
     }
-
-    if (target.id === 'filter-default') {
-      def();
-    }
-
-    if (target.id === 'filter-random') {
-      random();
-    }
-
-    if (target.id === 'filter-discussed') {
-      discuss();
-    }
   });
 };
 
-export { showFilterList, filterSwitch, randomSort, sortByComments };
+const setDefaultFilter = (cb) => {
+  defaultFilterButton.addEventListener('click', () => {
+    cb();
+  });
+};
+
+const setRandomFilter = (cb, photoArray) => {
+  randomFilterButton.addEventListener('click', () => {
+    cb(randomSort(photoArray));
+  });
+};
+
+const setCommentFilter = (cb, photoArray) => {
+  commentFilterButton.addEventListener('click', () => {
+    cb(sortByComments(photoArray));
+  });
+};
+
+export { showFilterList, filterSwitch, setRandomFilter, setCommentFilter, setDefaultFilter };
