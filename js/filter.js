@@ -1,4 +1,4 @@
-import { shuffle } from './util';
+import { shuffle } from './util.js';
 
 const RANDOM_PHOTO_QUANTITY = 10;
 
