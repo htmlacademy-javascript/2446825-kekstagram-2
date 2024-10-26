@@ -3,6 +3,13 @@ const picturesList = document.querySelector('.pictures');
 
 const similarListFragment = document.createDocumentFragment();
 
+const clearPictureList = () => {
+  const pic = document.querySelectorAll('.picture');
+  pic.forEach((element) => {
+    element.remove();
+  });
+};
+
 const renderPictures = (thumbsArray) => {
   thumbsArray.forEach(({id, url, description, likes, comments}) => {
     const pictureElement = pictureTemplate.cloneNode(true);
@@ -13,6 +20,7 @@ const renderPictures = (thumbsArray) => {
     pictureElement.querySelector('.picture__comments').textContent = comments.length;
     similarListFragment.appendChild(pictureElement);
   });
+  clearPictureList();
   picturesList.appendChild(similarListFragment);
 };
 
