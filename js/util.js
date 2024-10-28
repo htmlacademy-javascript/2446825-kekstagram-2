@@ -37,12 +37,12 @@ const getNumber = (string) => {
 };
 
 const shuffle = (array) => {
-  let j, temp;
-  for (let i = array.length - 1; i > 0; i--) {
-    j = Math.floor(Math.random() * (i + 1));
-    temp = array[j];
-    array[j] = array[i];
-    array[i] = temp;
+  let shuffleItem, temp;
+  for (let currentItem = array.length - 1; currentItem > 0; currentItem--) {
+    shuffleItem = Math.floor(Math.random() * (currentItem + 1));
+    temp = array[shuffleItem];
+    array[shuffleItem] = array[currentItem];
+    array[currentItem] = temp;
   }
   return array;
 };

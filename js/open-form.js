@@ -3,6 +3,7 @@ import { showUnloadAllertMessage, showUnloadSuccesMessage } from './alerts.js';
 import { sizeReset } from './resize-photo.js';
 import { createSlider, updateSlider, filterReset } from './slider.js';
 import { sendData } from './api.js';
+import { setUserPhoto } from './user-pfoto-load.js';
 
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_QUANTITY = 5;
@@ -102,6 +103,7 @@ const onDocumentKeydown = (evt) => {
 function openFilterForm() {
   document.body.classList.add('modal-open');
   overlay.classList.remove('hidden');
+  setUserPhoto();
   createSlider();
   updateSlider();
 

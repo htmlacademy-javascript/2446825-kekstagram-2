@@ -1,6 +1,13 @@
-import { shuffle } from './util.js';
+import { debounce, shuffle } from './util.js';
 
 const RANDOM_PHOTO_QUANTITY = 10;
+const TIMEOUT_DELAY = 500;
+
+const FilterButtonsId = {
+  DEFAULT_BUTTON: 'filter-default',
+  RANDOM_BUTTON: 'filter-random',
+  COMMENT_BUTTON: 'filter-discussed'
+};
 
 const filterContainer = document.querySelector('.img-filters');
 const filterButtons = filterContainer.querySelectorAll('.img-filters__button');
@@ -24,7 +31,7 @@ const comparePhotosByComments = (photoA, photoB) => {
 
 const sortByComments = (photoArray) => photoArray.slice().sort(comparePhotosByComments);
 
-const filterSwitch = (cb, photoArray) => {
+const setFilterButtonClick = (cb, photoArray) => {
   filterContainer.addEventListener('click', (evt) => {
     const target = evt.target;
     if (target.classList.contains('img-filters__button')) {
@@ -34,18 +41,22 @@ const filterSwitch = (cb, photoArray) => {
       target.classList.add('img-filters__button--active');
     }
 
-    if (target.id === 'filter-default') {
+    if (target.id === FilterButtonsId.DEFAULT_BUTTON) {
       cb(photoArray);
     }
 
-    if (target.id === 'filter-random') {
+    if (target.id === FilterButtonsId.RANDOM_BUTTON) {
       cb(randomSort(photoArray));
     }
 
-    if (target.id === 'filter-discussed') {
+    if (target.id === FilterButtonsId.COMMENT_BUTTON) {
       cb(sortByComments(photoArray));
     }
   });
+};
+
+const filterSwitch = (cb, photoArray) => {
+  setFilterButtonClick(debounce(cb, TIMEOUT_DELAY), photoArray);
 };
 
 export { showFilterList, filterSwitch };
