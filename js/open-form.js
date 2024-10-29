@@ -122,13 +122,9 @@ function closeFilterForm () {
   document.removeEventListener('keydown', onDocumentKeydown);
 }
 
-openFormElement.addEventListener('change', () => {
-  openFilterForm();
-});
+openFormElement.addEventListener('change', openFilterForm);
 
-closeButton.addEventListener('click', () => {
-  closeFilterForm();
-});
+closeButton.addEventListener('click', closeFilterForm);
 
 const blockSubmitButton = () => {
   submitButton.disabled = true;
@@ -149,8 +145,8 @@ const setFilterFormSubmit = () => {
 
       sendData(formData)
         .then(() => {
-          closeFilterForm();
           showUnloadSuccesMessage();
+          closeFilterForm();
         })
         .catch(() => {
           showUnloadAllertMessage();

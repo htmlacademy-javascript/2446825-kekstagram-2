@@ -1,4 +1,4 @@
-import { sliderSetting } from './data.js';
+import { sliderSettings } from './data.js';
 
 const form = document.querySelector('.img-upload__form');
 const overlay = form.querySelector('.img-upload__overlay');
@@ -17,6 +17,17 @@ const createSlider = () => {
     start: 1,
     step: 0.1,
     connect: 'lower',
+    format: {
+      to: function (value) {
+        if (Number.isInteger(value)) {
+          return value.toFixed(0);
+        }
+        return value.toFixed(1);
+      },
+      from: function (value) {
+        return parseFloat(value);
+      },
+    },
   });
 };
 
@@ -29,21 +40,21 @@ const updateSlider = () => {
       if (evt.target.checked) {
         sliderElement.noUiSlider.updateOptions({
           range: {
-            min: sliderSetting[effect].min,
-            max: sliderSetting[effect].max,
+            min: sliderSettings[effect].min,
+            max: sliderSettings[effect].max,
           },
-          start: sliderSetting[effect].start,
-          step: sliderSetting[effect].step,
+          start: sliderSettings[effect].start,
+          step: sliderSettings[effect].step,
         });
         sliderElement.noUiSlider.on('update', () => {
           effectValue.value = sliderElement.noUiSlider.get();
-          previewImage.style.filter = `${sliderSetting[effect].effect}(${effectValue.value}${sliderSetting[effect].unit})`;
+          previewImage.style.filter = `${sliderSettings[effect].effect}(${effectValue.value}${sliderSettings[effect].unit})`;
         });
       }
       if (effect !== 'none') {
         sliderContainer.classList.remove('hidden');
       } else {
-        previewImage.style.filter = `${sliderSetting[effect].effect}`;
+        previewImage.style.filter = `${sliderSettings[effect].effect}`;
         sliderContainer.classList.add('hidden');
       }
     });
