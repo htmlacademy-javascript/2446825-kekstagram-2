@@ -1,14 +1,3 @@
-//* генератор рандомных чисел
-const getRandomInteger = (min, max) => {
-  const lower = Math.ceil(Math.min(min, max));
-  const upper = Math.floor(Math.max(min, max));
-  const result = Math.random() * (upper - lower + 1) + lower;
-  return Math.floor(result);
-};
-
-//* генератор рандомных эдементов массива
-const getRandomArrayElement = (elements) => elements[getRandomInteger(0, elements.length - 1)];
-
 //* проверка на escape
 const isEscape = (evt) => evt.key === 'Escape';
 
@@ -55,4 +44,4 @@ const debounce = (callback, timeoutDelay) => {
   };
 };
 
-export { getRandomInteger, getRandomArrayElement, isEscape, makeElement, getNumber, shuffle, debounce };
+export { isEscape, makeElement, getNumber, shuffle, debounce };

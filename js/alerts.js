@@ -6,7 +6,6 @@ const alertTemplate = document.querySelector('#data-error').content.querySelecto
 const unloadAllert = document.querySelector('#error').content.querySelector('.error');
 const unloadSucces = document.querySelector('#success').content.querySelector('.success');
 
-
 //* сообщение с ошибкой загрузки изображений от других пользователей
 const showLoadAlert = () => {
   const alertContainer = alertTemplate.cloneNode(true);
