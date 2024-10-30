@@ -7,6 +7,7 @@ import { setUserPhoto } from './user-pfoto-load.js';
 
 const MAX_COMMENT_LENGTH = 140;
 const MAX_HASHTAG_QUANTITY = 5;
+const HASHTAG_RULE = /^#[а-яёa-z0-9]{1,19}$/i;
 
 const AlertMessages = {
   VALUE : ' Неверный формат хэштега! ',
@@ -28,7 +29,6 @@ const hashtagInput = overlay.querySelector('.text__hashtags');
 const commentInput = overlay.querySelector('.text__description');
 const submitButton = overlay.querySelector('.img-upload__submit');
 
-const hashtagRule = /^#[а-яёa-z0-9]{1,19}$/i;
 
 let hashtagValue;
 let hashtagQuantity;
@@ -45,22 +45,22 @@ const validateComments = (value) => value.length <= MAX_COMMENT_LENGTH;
 
 const validateHashtag = (value) => {
   const hashtagsArray = value.trim().split(' ').filter((element) => element !== '');
-  const noRepeatArray = [];
+  const noRepeatHashtagsArray = [];
   hashtagsArray.forEach((element) => {
     element = element.toLowerCase();
-    if (!noRepeatArray.includes(element)) {
-      noRepeatArray.push(element);
+    if (!noRepeatHashtagsArray.includes(element)) {
+      noRepeatHashtagsArray.push(element);
     }
   });
 
-  hashtagValue = hashtagsArray.every((element) => hashtagRule.test(element));
+  hashtagValue = hashtagsArray.every((element) => HASHTAG_RULE.test(element));
   hashtagQuantity = hashtagsArray.length <= MAX_HASHTAG_QUANTITY;
-  hashtagRepeat = noRepeatArray.length === hashtagsArray.length;
+  hashtagRepeat = noRepeatHashtagsArray.length === hashtagsArray.length;
 
   return hashtagValue && hashtagQuantity && hashtagRepeat;
 };
 
-const hastagErrorText = () => {
+const getHastagErrorText = () => {
   let errorText = '';
   if (!hashtagValue) {
     errorText += AlertMessages.VALUE;
@@ -80,7 +80,7 @@ const hastagErrorText = () => {
 pristine.addValidator(
   hashtagInput,
   validateHashtag,
-  hastagErrorText,
+  getHastagErrorText,
 );
 
 pristine.addValidator(

@@ -25,15 +25,15 @@ const getNumber = (string) => {
   return resultString;
 };
 
-const shuffle = (array) => {
+const shuffle = (thumbsArray) => {
   let shuffleItem, temp;
-  for (let currentItem = array.length - 1; currentItem > 0; currentItem--) {
+  for (let currentItem = thumbsArray.length - 1; currentItem > 0; currentItem--) {
     shuffleItem = Math.floor(Math.random() * (currentItem + 1));
-    temp = array[shuffleItem];
-    array[shuffleItem] = array[currentItem];
-    array[currentItem] = temp;
+    temp = thumbsArray[shuffleItem];
+    thumbsArray[shuffleItem] = thumbsArray[currentItem];
+    thumbsArray[currentItem] = temp;
   }
-  return array;
+  return thumbsArray;
 };
 
 const debounce = (callback, timeoutDelay) => {

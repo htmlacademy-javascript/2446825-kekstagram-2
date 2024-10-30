@@ -6,7 +6,7 @@ const previewImage = overlay.querySelector('.img-upload__preview').querySelector
 const sliderContainer = overlay.querySelector('.img-upload__effect-level');
 const sliderElement = overlay.querySelector('.effect-level__slider');
 const effectValue = overlay.querySelector('.effect-level__value');
-const filterList = overlay.querySelectorAll('.effects__radio');
+const filtersList = overlay.querySelectorAll('.effects__radio');
 
 const createSlider = () => {
   noUiSlider.create(sliderElement, {
@@ -32,7 +32,7 @@ const createSlider = () => {
 };
 
 const updateSlider = () => {
-  filterList.forEach((element) => {
+  filtersList.forEach((element) => {
     sliderContainer.classList.add('hidden');
     element.addEventListener('change', (evt) => {
       const effect = evt.target.value;
