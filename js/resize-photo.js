@@ -28,7 +28,7 @@ scaleUpButton.addEventListener('click', () => {
 });
 
 const sizeReset = () => {
-  scaleValue.value = '100%';
+  valueNumber = 100;
   previewImage.style.transform = 'scale(1)';
 };
 

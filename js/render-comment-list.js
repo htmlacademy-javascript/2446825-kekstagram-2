@@ -2,7 +2,7 @@ import { makeElement } from './util.js';
 
 const STEP = 5;
 let currentCount = 0;
-let commentList = [];
+let commentsList = [];
 
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureCommentList = bigPicture.querySelector('.social__comments');
@@ -10,7 +10,7 @@ const bigPictureCommentLoader = bigPicture.querySelector('.comments-loader');
 
 const renderComments = () => {
   const commentFragment = document.createDocumentFragment();
-  const renderedComments = commentList.slice(currentCount, currentCount + STEP);
+  const renderedComments = commentsList.slice(currentCount, currentCount + STEP);
   const renderedCommentsLength = renderedComments.length + currentCount;
 
   renderedComments.forEach((element) => {
@@ -26,7 +26,7 @@ const renderComments = () => {
   bigPictureCommentList.appendChild(commentFragment);
   bigPicture.querySelector('.social__comment-shown-count').textContent = bigPictureCommentList.children.length;
 
-  if (renderedCommentsLength >= commentList.length) {
+  if (renderedCommentsLength >= commentsList.length) {
     bigPictureCommentLoader.classList.add('hidden');
   }
 
@@ -42,7 +42,7 @@ const clearCommentList = () => {
 };
 
 const renderCommentList = (commentsArray) => {
-  commentList = commentsArray;
+  commentsList = commentsArray;
   renderComments();
 
   bigPictureCommentLoader.addEventListener('click', renderComments);

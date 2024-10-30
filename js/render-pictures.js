@@ -4,8 +4,8 @@ const picturesList = document.querySelector('.pictures');
 const similarListFragment = document.createDocumentFragment();
 
 const clearPictureList = () => {
-  const pic = document.querySelectorAll('.picture');
-  pic.forEach((element) => {
+  const pictures = document.querySelectorAll('.picture');
+  pictures.forEach((element) => {
     element.remove();
   });
 };
